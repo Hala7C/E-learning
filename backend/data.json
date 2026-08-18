@@ -1,0 +1,1287 @@
+[
+{
+  "model": "newapp.statment",
+  "pk": 1,
+  "fields": {
+    "view_name": "course"
+  }
+},
+{
+  "model": "newapp.statment",
+  "pk": 2,
+  "fields": {
+    "view_name": "notification"
+  }
+},
+{
+  "model": "newapp.statment",
+  "pk": 3,
+  "fields": {
+    "view_name": "Policy"
+  }
+},
+{
+  "model": "newapp.statment",
+  "pk": 4,
+  "fields": {
+    "view_name": "DraftProfile"
+  }
+},
+{
+  "model": "newapp.statment",
+  "pk": 5,
+  "fields": {
+    "view_name": "SubmitProfile"
+  }
+},
+{
+  "model": "newapp.statment",
+  "pk": 6,
+  "fields": {
+    "view_name": "PendingProfile"
+  }
+},
+{
+  "model": "newapp.statment",
+  "pk": 7,
+  "fields": {
+    "view_name": "Category"
+  }
+},
+{
+  "model": "newapp.statment",
+  "pk": 8,
+  "fields": {
+    "view_name": "VedioSection"
+  }
+},
+{
+  "model": "newapp.statment",
+  "pk": 9,
+  "fields": {
+    "view_name": "LiveSessionMainData"
+  }
+},
+{
+  "model": "newapp.statment",
+  "pk": 10,
+  "fields": {
+    "view_name": "Cycle"
+  }
+},
+{
+  "model": "newapp.statment",
+  "pk": 11,
+  "fields": {
+    "view_name": "LiveSessionDetails"
+  }
+},
+{
+  "model": "newapp.statment",
+  "pk": 12,
+  "fields": {
+    "view_name": "CourseSubscrubtion"
+  }
+},
+{
+  "model": "newapp.statment",
+  "pk": 13,
+  "fields": {
+    "view_name": "Transaction"
+  }
+},
+{
+  "model": "newapp.statment",
+  "pk": 14,
+  "fields": {
+    "view_name": "AccountDetail"
+  }
+},
+{
+  "model": "newapp.statment",
+  "pk": 15,
+  "fields": {
+    "view_name": "Enrollment"
+  }
+},
+{
+  "model": "newapp.statment",
+  "pk": 16,
+  "fields": {
+    "view_name": "test"
+  }
+},
+{
+  "model": "newapp.statment",
+  "pk": 17,
+  "fields": {
+    "view_name": "Cycles"
+  }
+},
+{
+  "model": "newapp.statment",
+  "pk": 18,
+  "fields": {
+    "view_name": "StripeAuthorize"
+  }
+},
+{
+  "model": "newapp.statment",
+  "pk": 19,
+  "fields": {
+    "view_name": "Payout"
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 1,
+  "fields": {
+    "name": "update",
+    "statment": 1
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 2,
+  "fields": {
+    "name": "list",
+    "statment": 1
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 3,
+  "fields": {
+    "name": "retrieve",
+    "statment": 1
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 4,
+  "fields": {
+    "name": "destroy",
+    "statment": 1
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 5,
+  "fields": {
+    "name": "delete_translation",
+    "statment": 1
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 6,
+  "fields": {
+    "name": "nn",
+    "statment": 1
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 7,
+  "fields": {
+    "name": "update",
+    "statment": 2
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 8,
+  "fields": {
+    "name": "list,retrieve",
+    "statment": 2
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 9,
+  "fields": {
+    "name": "destroy",
+    "statment": 2
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 10,
+  "fields": {
+    "name": "*",
+    "statment": 3
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 11,
+  "fields": {
+    "name": "list,retrieve",
+    "statment": 4
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 12,
+  "fields": {
+    "name": "update",
+    "statment": 4
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 13,
+  "fields": {
+    "name": "create",
+    "statment": 4
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 14,
+  "fields": {
+    "name": "destroy",
+    "statment": 4
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 15,
+  "fields": {
+    "name": "list",
+    "statment": 6
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 16,
+  "fields": {
+    "name": "retrieve",
+    "statment": 6
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 17,
+  "fields": {
+    "name": "update",
+    "statment": 6
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 18,
+  "fields": {
+    "name": "submitDraftProfile",
+    "statment": 5
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 19,
+  "fields": {
+    "name": "list,retrieve",
+    "statment": 7
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 20,
+  "fields": {
+    "name": "update",
+    "statment": 7
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 21,
+  "fields": {
+    "name": "destroy",
+    "statment": 7
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 22,
+  "fields": {
+    "name": "create",
+    "statment": 7
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 23,
+  "fields": {
+    "name": "create",
+    "statment": 8
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 24,
+  "fields": {
+    "name": "update",
+    "statment": 8
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 25,
+  "fields": {
+    "name": "destroy",
+    "statment": 8
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 26,
+  "fields": {
+    "name": "list,retrieve",
+    "statment": 8
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 27,
+  "fields": {
+    "name": "update",
+    "statment": 11
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 28,
+  "fields": {
+    "name": "destroy",
+    "statment": 11
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 29,
+  "fields": {
+    "name": "list,retrieve",
+    "statment": 11
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 30,
+  "fields": {
+    "name": "create",
+    "statment": 11
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 31,
+  "fields": {
+    "name": "create",
+    "statment": 10
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 32,
+  "fields": {
+    "name": "update",
+    "statment": 10
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 33,
+  "fields": {
+    "name": "destroy",
+    "statment": 10
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 34,
+  "fields": {
+    "name": "list,retrieve",
+    "statment": 10
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 35,
+  "fields": {
+    "name": "create",
+    "statment": 12
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 36,
+  "fields": {
+    "name": "update",
+    "statment": 12
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 37,
+  "fields": {
+    "name": "destroy",
+    "statment": 12
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 38,
+  "fields": {
+    "name": "list",
+    "statment": 12
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 39,
+  "fields": {
+    "name": "retrieve",
+    "statment": 12
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 40,
+  "fields": {
+    "name": "create",
+    "statment": 13
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 41,
+  "fields": {
+    "name": "update",
+    "statment": 13
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 42,
+  "fields": {
+    "name": "destroy",
+    "statment": 13
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 43,
+  "fields": {
+    "name": "list",
+    "statment": 13
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 44,
+  "fields": {
+    "name": "retrieve",
+    "statment": 13
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 45,
+  "fields": {
+    "name": "create",
+    "statment": 14
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 46,
+  "fields": {
+    "name": "update",
+    "statment": 14
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 47,
+  "fields": {
+    "name": "destroy",
+    "statment": 14
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 48,
+  "fields": {
+    "name": "list",
+    "statment": 14
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 49,
+  "fields": {
+    "name": "retrieve",
+    "statment": 14
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 50,
+  "fields": {
+    "name": "create",
+    "statment": 15
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 51,
+  "fields": {
+    "name": "update",
+    "statment": 15
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 52,
+  "fields": {
+    "name": "destroy",
+    "statment": 15
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 53,
+  "fields": {
+    "name": "list",
+    "statment": 15
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 54,
+  "fields": {
+    "name": "retrieve",
+    "statment": 15
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 55,
+  "fields": {
+    "name": "reCalculateBalance",
+    "statment": 14
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 56,
+  "fields": {
+    "name": "get_revenue",
+    "statment": 14
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 57,
+  "fields": {
+    "name": "get_balance",
+    "statment": 14
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 58,
+  "fields": {
+    "name": "get_trainer_transactions",
+    "statment": 14
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 59,
+  "fields": {
+    "name": "get_total_trainer_transactions",
+    "statment": 14
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 60,
+  "fields": {
+    "name": "partial_update",
+    "statment": 1
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 61,
+  "fields": {
+    "name": "partial_update",
+    "statment": 8
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 62,
+  "fields": {
+    "name": "create",
+    "statment": 9
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 63,
+  "fields": {
+    "name": "update",
+    "statment": 9
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 64,
+  "fields": {
+    "name": "destroy",
+    "statment": 9
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 65,
+  "fields": {
+    "name": "list",
+    "statment": 9
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 66,
+  "fields": {
+    "name": "retrieve",
+    "statment": 9
+  }
+},
+{
+  "model": "newapp.action",
+  "pk": 67,
+  "fields": {
+    "name": "unsubscribe",
+    "statment": 12
+  }
+},
+{
+  "model": "newapp.conditions",
+  "pk": 1,
+  "fields": {
+    "name": "is_owner",
+    "actions": [
+      7
+    ]
+  }
+},
+{
+  "model": "newapp.conditions",
+  "pk": 2,
+  "fields": {
+    "name": "is_assistant",
+    "actions": [
+      8,
+      9,
+      7
+    ]
+  }
+},
+{
+  "model": "newapp.conditions",
+  "pk": 3,
+  "fields": {
+    "name": "is_owner",
+    "actions": [
+      12,
+      14
+    ]
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 3,
+  "fields": {
+    "action": "list,retrieve",
+    "principal": "*",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 1
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 4,
+  "fields": {
+    "action": "create",
+    "principal": "*",
+    "effect": "allow",
+    "conditions": "is_trainer_profile_approved",
+    "statmant": 1
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 5,
+  "fields": {
+    "action": "update",
+    "principal": "*",
+    "effect": "allow",
+    "conditions": "is_owner,is_assistant",
+    "statmant": 1
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 6,
+  "fields": {
+    "action": "destroy",
+    "principal": "*",
+    "effect": "allow",
+    "conditions": "is_owner",
+    "statmant": 1
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 7,
+  "fields": {
+    "action": "getTrainerCourse",
+    "principal": "*",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 1
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 8,
+  "fields": {
+    "action": "give_obj_perm",
+    "principal": "group:Trainer",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 1
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 9,
+  "fields": {
+    "action": "delete_translation",
+    "principal": "group:Trainer",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 1
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 10,
+  "fields": {
+    "action": "update",
+    "principal": "*",
+    "effect": "allow",
+    "conditions": "is_owner",
+    "statmant": 2
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 11,
+  "fields": {
+    "action": "list,retrieve",
+    "principal": "group:Admin",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 2
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 12,
+  "fields": {
+    "action": "destroy",
+    "principal": "group:Admin",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 2
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 13,
+  "fields": {
+    "action": "*",
+    "principal": "group:Admin",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 3
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 14,
+  "fields": {
+    "action": "delete_translation",
+    "principal": "group:Trainer",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 1
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 15,
+  "fields": {
+    "action": "delete_translation",
+    "principal": "group:Trainer,id:37",
+    "effect": "allow",
+    "conditions": "is_owner",
+    "statmant": 1
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 16,
+  "fields": {
+    "action": "create",
+    "principal": "*",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 4
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 17,
+  "fields": {
+    "action": "update,destroy",
+    "principal": "authenticated",
+    "effect": "allow",
+    "conditions": "is_owner",
+    "statmant": 4
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 18,
+  "fields": {
+    "action": "list,retrieve",
+    "principal": "group:Admin",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 4
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 19,
+  "fields": {
+    "action": "list,retrieve,update",
+    "principal": "group:Admin",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 6
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 20,
+  "fields": {
+    "action": "update",
+    "principal": "authenticated",
+    "effect": "allow",
+    "conditions": "is_owner",
+    "statmant": 5
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 21,
+  "fields": {
+    "action": "*",
+    "principal": "group:Admin,group:Trainer",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 7
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 22,
+  "fields": {
+    "action": "create",
+    "principal": "group:Trainer",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 8
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 23,
+  "fields": {
+    "action": "update,destroy",
+    "principal": "group:Trainer",
+    "effect": "allow",
+    "conditions": "is_owner",
+    "statmant": 8
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 24,
+  "fields": {
+    "action": "list,retrieve",
+    "principal": "authenticated",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 8
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 25,
+  "fields": {
+    "action": "list,retrieve",
+    "principal": "authenticated",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 11
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 26,
+  "fields": {
+    "action": "update,destroy",
+    "principal": "group:Trainer",
+    "effect": "allow",
+    "conditions": "is_owner",
+    "statmant": 11
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 27,
+  "fields": {
+    "action": "update,destroy",
+    "principal": "group:Trainer",
+    "effect": "allow",
+    "conditions": "is_owner",
+    "statmant": 10
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 28,
+  "fields": {
+    "action": "list,retrieve",
+    "principal": "authenticated",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 10
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 29,
+  "fields": {
+    "action": "create",
+    "principal": "group:Trainer",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 10
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 30,
+  "fields": {
+    "action": "create",
+    "principal": "authenticated",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 12
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 31,
+  "fields": {
+    "action": "list,retrieve",
+    "principal": "group:Admin",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 12
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 32,
+  "fields": {
+    "action": "list,retrieve",
+    "principal": "group:Trainer",
+    "effect": "allow",
+    "conditions": "is_owner",
+    "statmant": 12
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 33,
+  "fields": {
+    "action": "update,destroy",
+    "principal": "group:Trainer",
+    "effect": "allow",
+    "conditions": "is_owner",
+    "statmant": 12
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 34,
+  "fields": {
+    "action": "*",
+    "principal": "group:Admin",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 13
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 35,
+  "fields": {
+    "action": "*",
+    "principal": "group:Admin",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 15
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 36,
+  "fields": {
+    "action": "*",
+    "principal": "group:Admin",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 14
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 37,
+  "fields": {
+    "action": "*",
+    "principal": "group:Trainer",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 14
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 38,
+  "fields": {
+    "action": "retrieve",
+    "principal": "authenticated",
+    "effect": "allow",
+    "conditions": "is_owner",
+    "statmant": 4
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 39,
+  "fields": {
+    "action": "partial_update",
+    "principal": "group:Trainer",
+    "effect": "allow",
+    "conditions": "is_owner",
+    "statmant": 1
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 40,
+  "fields": {
+    "action": "partial_update",
+    "principal": "group:Trainer",
+    "effect": "allow",
+    "conditions": "is_owner",
+    "statmant": 8
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 41,
+  "fields": {
+    "action": "destroy",
+    "principal": "group:Admin",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 8
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 42,
+  "fields": {
+    "action": "*",
+    "principal": "group:Admin",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 9
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 43,
+  "fields": {
+    "action": "retrieve,update,destroy",
+    "principal": "group:Trainer",
+    "effect": "allow",
+    "conditions": "is_owner",
+    "statmant": 9
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 44,
+  "fields": {
+    "action": "create",
+    "principal": "group:Trainer",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 9
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 45,
+  "fields": {
+    "action": "create",
+    "principal": "group:Admin",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 11
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 46,
+  "fields": {
+    "action": "update,destroy",
+    "principal": "group:Admin",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 11
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 47,
+  "fields": {
+    "action": "update,destroy",
+    "principal": "group:Trainer",
+    "effect": "allow",
+    "conditions": "is_owner",
+    "statmant": 11
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 49,
+  "fields": {
+    "action": "create",
+    "principal": "group:Trainer",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 11
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 50,
+  "fields": {
+    "action": "*",
+    "principal": "group:Admin",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 10
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 51,
+  "fields": {
+    "action": "unsubscribe",
+    "principal": "authenticated",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 12
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 52,
+  "fields": {
+    "action": "create,update",
+    "principal": "group:Trainer",
+    "effect": "deny",
+    "conditions": "",
+    "statmant": 14
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 53,
+  "fields": {
+    "action": "*",
+    "principal": "group:Trainer",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 18
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 54,
+  "fields": {
+    "action": "create",
+    "principal": "group:Trainer",
+    "effect": "allow",
+    "conditions": "is_connect_account_exist",
+    "statmant": 19
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 55,
+  "fields": {
+    "action": "*",
+    "principal": "group:Admin",
+    "effect": "allow",
+    "conditions": "",
+    "statmant": 19
+  }
+},
+{
+  "model": "newapp.policy",
+  "pk": 56,
+  "fields": {
+    "action": "create",
+    "principal": "group:Admin",
+    "effect": "deny",
+    "conditions": "",
+    "statmant": 19
+  }
+}
+]

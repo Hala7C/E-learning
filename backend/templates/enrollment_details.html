@@ -1,0 +1,33 @@
+<!-- email_template.html -->
+{% load i18n %}
+<!DOCTYPE html>
+{% if objects.0.language_code  == 'ar' %}
+<html dir="rtl">
+{% else %} 
+<html dir="ltr">
+{% endif %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% trans "Enrollment" %}</title>
+</head>
+<body>
+    <h1>{% blocktrans with name=objects.0.user.first_name %} Hello, {{ name }} {% endblocktrans %}</h1>
+    <p>{% trans " Your enrollment on e-learning has been processed successfully !!"  %}</p>
+    <p>{% trans " Live session details :"  %}</p>
+    {% for obj in objects %}
+    <div>
+    <p>{% blocktrans with title=obj.liveSessionMainData.title  %}Title : {{ title }}.{% endblocktrans %}</p>
+    <p>{% blocktrans with description=obj.liveSessionMainData.description  %}Description : {{ description }}.{% endblocktrans %}</p>
+    <p>{% blocktrans with price=obj.liveSessionDetail.price  %}Price : {{ price }}.{% endblocktrans %}</p>
+    <p>{% blocktrans with start=obj.liveSessionDetail.StartTime end=obj.liveSessionDetail.EndTime %}Date and Time : from {{ start }} to {{ end }} .{% endblocktrans %} </p>
+    <p>{% blocktrans with url=obj.zoom_url  %}Join URL :  {{ url }} .{% endblocktrans %} </p>
+    <p>{% blocktrans with password=obj.zoom_password  %}Password :  {{ password }} .{% endblocktrans %} </p>
+
+    <p>{% blocktrans with trainer=obj.course.trainer %}With trainer : {{ trainer }}.{% endblocktrans %}</p>
+
+    {% endfor %}
+    <p>{% trans "Thanks to join or platform ."  %}</p>
+    </div>
+</body>
+</html>

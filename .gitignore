@@ -1,0 +1,14 @@
+./backend/.venv/
+./backend/venv/
+venv
+*.pyc
+data/
+node_modules/
+build/
+./backend/.env
+.env
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
+./frontend/*
+frontend/*
