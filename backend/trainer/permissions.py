@@ -230,7 +230,6 @@ class DraftProfilePolicy(AccessPolicy):
         access_policies = Policy.objects.filter(statmant=statment)
         policies=get_access_statments(access_policies)
         statements=policies
-        print("DraftProfilePolicy statements:", statements)
     except Statment.DoesNotExist as e:
         if  settings.IS_DATA_LOADED == False :
             pass

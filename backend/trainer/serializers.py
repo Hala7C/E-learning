@@ -34,60 +34,35 @@ class StudentProfileSerializers(serializers.HyperlinkedModelSerializer):
 class AddTrainerProfileSerializers(serializers.HyperlinkedModelSerializer):
     user = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())
     age=serializers.IntegerField(read_only=True)
-    first_name = serializers.CharField(
-        write_only=True,
-        required=False,
-        allow_blank=True
-    )
+    name = serializers.CharField(read_only=True)
+    first_name = serializers.CharField(write_only=True, required=False, allow_blank=True)
+    last_name = serializers.CharField(write_only=True, required=False, allow_blank=True)
 
-    last_name = serializers.CharField(
-        write_only=True,
-        required=False,
-        allow_blank=True
-    )
     class Meta:
             model = TeacherProfile
-            fields=['id','first_name','last_name','name','gender','birthday','age','bio','profile_picture','status','user']
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-
-        data["first_name"] = instance.user.first_name
-        data["last_name"] = instance.user.last_name
-
-        return data
-
-    def update(self, instance, validated_data):
-        user = instance.user
-
+            fields=['id','name','first_name','last_name','gender','birthday','age','bio','profile_picture','status','user']
+            
+    def _sync_user_name(self, user, validated_data):
+        # first_name/last_name belong to CustomUser, not TeacherProfile -
+        # they have to be routed to the related user explicitly, since
+        # they aren't real fields on this model.
         first_name = validated_data.pop("first_name", None)
         last_name = validated_data.pop("last_name", None)
-
         if first_name is not None:
             user.first_name = first_name
-
         if last_name is not None:
             user.last_name = last_name
+        if first_name is not None or last_name is not None:
+            user.save()
 
-        user.save()
-
-        return super().update(instance, validated_data)
     def create(self, validated_data):
-        user_data = validated_data.pop("user", {})
+        user = validated_data.get("user") or self.context["request"].user
+        self._sync_user_name(user, validated_data)
+        return TeacherProfile.objects.create(**validated_data)
 
-        user = self.context["request"].user
-
-        if "first_name" in user_data:
-            user.first_name = user_data["first_name"]
-
-        if "last_name" in user_data:
-            user.last_name = user_data["last_name"]
-
-        user.save()
-
-        return TeacherProfile.objects.create(
-            user=user,
-            **validated_data
-        )
+    def update(self, instance, validated_data):
+        self._sync_user_name(instance.user, validated_data)
+        return super().update(instance, validated_data)
             
 class SubmitTrainerProfileSerializers(serializers.HyperlinkedModelSerializer):
     user = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())
@@ -162,6 +137,8 @@ class AddCategorySerializer(TranslatableModelSerializer):
         
 class TrainerProfileSerializers(serializers.HyperlinkedModelSerializer):
     user = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())
+    first_name = serializers.CharField(source='user.first_name', read_only=True)
+    last_name = serializers.CharField(source='user.last_name', read_only=True)
     education = EducationSerializers(many=True, read_only=True)
     employments = EmploymentSerializers(many=True, read_only=True)
     skills = SkillSerializers(many=True, read_only=True)
@@ -169,7 +146,7 @@ class TrainerProfileSerializers(serializers.HyperlinkedModelSerializer):
     age=serializers.IntegerField(read_only=True)
     class Meta:
             model = TeacherProfile
-            fields=['id','name','gender','birthday','age','bio','profile_picture','achievements','education','employments','skills','status','user']
+            fields=['id','first_name','last_name','gender','birthday','age','bio','profile_picture','achievements','education','employments','skills','status','user']
 
 
 class VedioSectionSerializer(TranslatableModelSerializer):

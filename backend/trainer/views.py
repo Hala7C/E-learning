@@ -135,14 +135,15 @@ class DraftTrainerProfile(ModelViewSet):
     #         return Response({"error": "No profile yet."}, status=status.HTTP_404_NOT_FOUND)
     #     ser = TrainerProfileSerializers(profile, context={'request': request})
     #     return Response(ser.data, status=status.HTTP_200_OK)
-    @action( detail=False, methods=["get"], url_path="me")
+    @action(detail=False, methods=["get"], url_path="me")
     def me(self, request):
-        profile = TeacherProfile.objects.get(
-            user=request.user
-        )
-
+        try:
+            profile = TeacherProfile.objects.get(user=request.user)
+        except TeacherProfile.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
         serializer = self.get_serializer(profile)
         return Response(serializer.data)
+
     def create(self, request, *args, **kwargs):
         user = request.user
         data = request.data.copy()  # .copy() returns a mutable copy either way -

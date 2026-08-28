@@ -1,21 +1,22 @@
 import { useState, useEffect } from "react";
 
-export default function TrainerProfileForm({ profile, onSave }) {
+export default function TrainerProfileForm({ profile, user, onSave }) {
   const [form, setForm] = useState({ gender: "", birthday: "", bio: "", first_name: "", last_name: "" });
   const [pictureFile, setPictureFile] = useState(null);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    if (profile) {
-      setForm({
-        gender: profile.gender || "",
-        birthday: profile.birthday || "",
-        bio: profile.bio || "",
-        first_name: profile.first_name || "",
-        last_name: profile.last_name || "",
-      });
-    }
-  }, [profile]);
+    setForm({
+      gender: profile?.gender || "",
+      birthday: profile?.birthday || "",
+      bio: profile?.bio || "",
+      // Profile doesn't exist until first save, but the account's name
+      // was already collected at registration - don't make the user
+      // retype it.
+      first_name: profile?.first_name || user?.first_name || "",
+      last_name: profile?.last_name || user?.last_name || "",
+    });
+  }, [profile, user]);
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });

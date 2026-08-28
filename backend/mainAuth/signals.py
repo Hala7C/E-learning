@@ -13,7 +13,7 @@ def create_profile(sender, instance, created, **kwargs):
     if created:
         group = Group.objects.get(name="Student")
         instance.groups.add(group)
-        StudentProfile.objects.create(user=instance, name=instance.get_full_name)
+        StudentProfile.objects.create(user=instance)
         
 
 

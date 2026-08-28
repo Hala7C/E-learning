@@ -2,8 +2,10 @@ import { useTrainerProfile } from "../hooks/useTrainerProfile";
 import { educationApi, employmentApi, skillApi, achievementApi } from "../api/trainerProfile";
 import TrainerProfileForm from "../components/TrainerProfileForm";
 import ProfileSectionEditor from "../components/ProfileSectionEditor";
+import { useAuth } from "../context/AuthContext";
 
 export default function TrainerProfile() {
+  const { user } = useAuth();
   const {
     profile, loading, error, canSubmit,
     createProfile, updateProfile, submitProfile,
@@ -36,7 +38,7 @@ export default function TrainerProfile() {
 
       {error && <p className="error-text">{error}</p>}
 
-      <TrainerProfileForm profile={profile} onSave={handleSaveProfile} />
+      <TrainerProfileForm profile={profile} user={user} onSave={handleSaveProfile} />
 
       {!profile && (
         <p className="empty-state">

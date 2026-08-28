@@ -31,6 +31,11 @@ class UserRegistrationSerializer(BaseUserRegistrationSerializer):
         fields=['id','email','first_name','last_name','password','is_active', 'logged_in', 'otp_base32']
 
     def validate(self, data):
+        if not data.get('first_name') or not data.get('last_name'):
+            raise serializers.ValidationError({
+                'first_name': _('First and last name are required.'),
+                'last_name': _('First and last name are required.'),
+            })
         user = User(**data)
         password = data.get('password')
         errors = dict() 

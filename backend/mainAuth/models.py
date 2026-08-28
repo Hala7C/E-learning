@@ -93,13 +93,11 @@ class CustomUser(AbstractUser,PermissionsMixin):
 class BaseProfile(models.Model):
     GENDER_CHOICES=[(None,'None'),('male','Male'),('female','Female')]
     # user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
     gender=models.CharField(max_length=100,choices=GENDER_CHOICES,null=True, blank=True)
     birthday = models.DateField(null=True, blank=True)
     bio = models.TextField(null=True, blank=True)
     profile_picture = models.ImageField(upload_to='photos/', blank=True)
-    def __str__(self):
-        return f"{self.user.get_full_name}'s Profile"
+    
     class Meta:
         abstract = True
     def age(self):
@@ -112,8 +110,15 @@ class BaseProfile(models.Model):
             age -= 1
         return age
     @property
+    def name(self):
+        return self.user.get_full_name
+
+    @property
     def owner(self):
         return self.user
+    
+    def __str__(self):
+            return f"{self.name}'s Profile"
 class TeacherProfile(BaseProfile):
     STATUS_CHOICES=[('draft','Draft'),('pending','Pending'),('accepted','Accepted'),('declined','Declined')]
     status=models.CharField(max_length=100,choices=STATUS_CHOICES,default='draft')

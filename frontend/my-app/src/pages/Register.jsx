@@ -46,12 +46,12 @@ export default function Register() {
           <input name="email" type="email" value={form.email} onChange={handleChange} required />
         </label>
         <label>
-          First name <span className="optional-tag">(optional)</span>
-          <input name="first_name" value={form.first_name} onChange={handleChange} />
+          First name
+        <input name="first_name" value={form.first_name} onChange={handleChange} required />
         </label>
         <label>
-          Last name <span className="optional-tag">(optional)</span>
-          <input name="last_name" value={form.last_name} onChange={handleChange} />
+          Last name
+          <input name="last_name" value={form.last_name} onChange={handleChange} required />
         </label>
         <label>
           Password
