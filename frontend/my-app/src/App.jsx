@@ -1,6 +1,8 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import ActivateAccount from "./pages/ActivateAccount";
@@ -15,7 +17,11 @@ export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        {/* Rendered once, outside <Routes>, so navigation is consistent
+            across every page instead of each page owning its own header. */}
+        <Navbar />
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/activate/:uid/:token" element={<ActivateAccount />} />
@@ -23,7 +29,7 @@ export default function App() {
           <Route path="/password-reset/:uid/:token" element={<ResetPasswordConfirm />} />
           <Route path="/google-callback" element={<GoogleCallback />} />
           <Route
-            path="/"
+            path="/dashboard"
             element={
               <PrivateRoute>
                 <Dashboard />
@@ -36,6 +42,16 @@ export default function App() {
               <PrivateRoute>
                 <TrainerProfile />
               </PrivateRoute>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <div className="not-found">
+                <h1>Page not found</h1>
+                <p>The page you're looking for doesn't exist.</p>
+                <Link to="/">Back to home</Link>
+              </div>
             }
           />
         </Routes>

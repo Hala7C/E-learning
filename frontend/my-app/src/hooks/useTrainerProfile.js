@@ -38,7 +38,7 @@ export function useTrainerProfile() {
       await load(); // re-fetch to get the full nested shape with sections
       return true;
     } catch (err) {
-      setError(formatError(err));
+      setError(formatDetailError(err));
       return false;
     }
   }
@@ -50,7 +50,7 @@ export function useTrainerProfile() {
       await load();
       return true;
     } catch (err) {
-      setError(formatError(err));
+      setError(formatDetailError(err));
       return false;
     }
   }
@@ -62,7 +62,7 @@ export function useTrainerProfile() {
       await load();
       return true;
     } catch (err) {
-      setError(formatError(err));
+      setError(formatDetailError(err));
       return false;
     }
   }
@@ -83,8 +83,12 @@ export function useTrainerProfile() {
   };
 }
 
-function formatError(err) {
+// BUG FIX: this previously called an undefined `formatError`, which threw a
+// ReferenceError on every failed create/update/submit instead of showing
+// the user a message. This backend's convention for field-level errors is
+// { error: "..." }; fall back to the generic formatter otherwise.
+function formatDetailError(err) {
   const data = err.response?.data;
-  if (data?.error) return data.error; // this backend's convention for {"error": "..."}
+  if (data?.error) return data.error;
   return formatApiError(err);
 }
