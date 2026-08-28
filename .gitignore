@@ -10,5 +10,6 @@ build/
 **/migrations/**
 !**/migrations
 !**/migrations/__init__.py
-./frontend/*
-frontend/*
+dist/
+.env.local
+.DS_Store
