@@ -7,7 +7,7 @@ class CustomTokenStrategy:
     @classmethod
     def obtain(cls, user):
         token, created = Token.objects.get_or_create(user=user)
-        print(token)
+        print(f"[DEBUG] Token for {user}: {token}")
         return {
             "access": str(token),
             "user": user,

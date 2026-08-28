@@ -55,6 +55,7 @@ from .filters import TransactionsFilter
 User=get_user_model()
 from .permissions import *
 from .models import *
+from django.db.models.functions import Coalesce
 class HomePageView(TemplateView):
     template_name = 'home.html' 
 

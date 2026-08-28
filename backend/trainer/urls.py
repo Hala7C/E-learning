@@ -31,6 +31,7 @@ urlpatterns = [
     path('course/getTrainerCourse/', CourseViewSet.as_view({'get': 'getTrainerCourse'}), name='getTrainerCourse'),
     path('live_session/pk/getLiveSectionInfo/', LiveSessionMainDataSectionViewSet.as_view({'get': 'getLiveSectionInfo'}), name='getTrainerCourse'),
     path('submitDraftProfile/<int:pk>/', SubmitDraftProfile.as_view({'put': 'update'})),
+    path('draftProfile/me/', DraftTrainerProfile.as_view({'get': 'me'}), name='draft-profile-me'),
     path('',include(router.urls)),
 
 

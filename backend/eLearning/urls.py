@@ -8,9 +8,14 @@ from django.conf.urls.i18n import i18n_patterns
 
 # Base URL patterns
 urlpatterns = [
-    path('i18n/', include('django.conf.urls.i18n')),  # Language switcher URL
+    path('i18n/', include('django.conf.urls.i18n')),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.jwt')),
+    path('auth/', include('djoser.social.urls')),
+    path('auth/token/logout/', views.TokenDestroyView.as_view(), name='Token-based-logout'),
+    path('auth/', include('djoser.urls.authtoken')),
+    path('auth/logout/', views.LogoutView.as_view(), name='logout'),
 ]
-
 # Internationalized URL patterns
 urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),  # Admin URLs
@@ -20,12 +25,6 @@ urlpatterns += i18n_patterns(
     path('api/', include('rating.urls')),  # URLs for 'rating' app (rating API)
     path('api/payment/', include('payments.urls')),  # URLs for 'payments' app (payment API)
     path('api/dashboard/', include('AdminDashBoard.urls')),  # URLs for 'AdminDashoard' app (payment API)
-    path('auth/', include('djoser.urls')),  # URLs for djoser authentication
-    path('auth/', include('djoser.urls.jwt')),  # URLs for JWT authentication
-    path('auth/', include('djoser.social.urls')),  # URLs for social authentication
-    path('auth/token/logout/', views.TokenDestroyView.as_view(), name='Token-based-logout'),  # URL for token logout
-    path('auth/', include('djoser.urls.authtoken')),  # URLs for token authentication
-    path('auth/logout/', views.LogoutView.as_view(), name='logout'),  # URL for logout
     # route all admin api's to dashboard app
     path('api/dashboard/', include([
         path('payment/', include('payments.urls')),

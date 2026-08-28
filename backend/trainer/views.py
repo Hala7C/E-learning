@@ -128,36 +128,50 @@ class DraftTrainerProfile(ModelViewSet):
     permission_classes = [DraftProfilePolicy]
     queryset = TeacherProfile.objects.all()
     serializer_class= TrainerProfileSerializers
-    
-    def create(self,request,*args, **kwargs):
-        user=request.user
-        # request.data._mutable = True
-        request.data['status'] = 'draft'
-        request.data['user']=user.id
-        request.data['name']=user.get_full_name
+    # def list(self, request):
+    #     user = request.user
+    #     profile = TeacherProfile.objects.filter(user=user).first()
+    #     if not profile:
+    #         return Response({"error": "No profile yet."}, status=status.HTTP_404_NOT_FOUND)
+    #     ser = TrainerProfileSerializers(profile, context={'request': request})
+    #     return Response(ser.data, status=status.HTTP_200_OK)
+    @action( detail=False, methods=["get"], url_path="me")
+    def me(self, request):
+        profile = TeacherProfile.objects.get(
+            user=request.user
+        )
+
+        serializer = self.get_serializer(profile)
+        return Response(serializer.data)
+    def create(self, request, *args, **kwargs):
+        user = request.user
+        data = request.data.copy()  # .copy() returns a mutable copy either way -
+                                    # QueryDict.copy() and dict.copy() both work
+        data['status'] = 'draft'
+        data['user'] = user.id
+        data['name'] = user.get_full_name
         profile_exists = TeacherProfile.objects.filter(user=user).exists()
         if profile_exists:
-            return Response({"error":"A profile for this user is alreay exist"},status=status.HTTP_400_BAD_REQUEST)
-        ser=AddTrainerProfileSerializers(data=request.data)
+            return Response({"error": "A profile for this user is alreay exist"}, status=status.HTTP_400_BAD_REQUEST)
+        ser = AddTrainerProfileSerializers(data=data)
         if ser.is_valid():
             ser.save()
-            return Response(ser.data,status=status.HTTP_201_CREATED)
-        return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
-    
-    def update(self, request,pk, format=None):
-            # request.data._mutable = True
-            request.data['status'] = 'draft'
-            request.data['user']=request.user.id
-            try:
-                instance = TeacherProfile.objects.get(pk=pk)
-            except TeacherProfile.DoesNotExist:
-                return Response({"error": "Object not found."}, status=status.HTTP_404_NOT_FOUND)
-            ser = AddTrainerProfileSerializers(instance, data=request.data,partial=True)
-            if ser.is_valid():
-                ser.save()
-                return Response(ser.data,status=status.HTTP_200_OK)
-            return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
+            return Response(ser.data, status=status.HTTP_201_CREATED)
+        return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def update(self, request, pk, format=None):
+        data = request.data.copy()
+        data['status'] = 'draft'
+        data['user'] = request.user.id
+        try:
+            instance = TeacherProfile.objects.get(pk=pk)
+        except TeacherProfile.DoesNotExist:
+            return Response({"error": "Object not found."}, status=status.HTTP_404_NOT_FOUND)
+        ser = AddTrainerProfileSerializers(instance, data=data, partial=True)
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data, status=status.HTTP_200_OK)
+        return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
     def destroy(self, request,pk):
@@ -392,7 +406,10 @@ class EducationViewSet(ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         user = request.user
-        profile = TeacherProfile.objects.get(user=user)
+        try:
+            profile = TeacherProfile.objects.get(user=user)
+        except TeacherProfile.DoesNotExist:
+           return Response({"error": "Teacher profile does not exist for the current user."}, status=status.HTTP_404_NOT_FOUND)
         request.data['trainer_profile'] = profile.id
         serializer = EducationSerializers(data=request.data)
         if serializer.is_valid():
@@ -434,7 +451,7 @@ class EmploymentViewSet(ModelViewSet):
     def list(self,request,*args, **kwargs):
         user=request.user
         profile=TeacherProfile.objects.filter(user=user).get()
-        employments=profile.employments
+        employments=profile.employments.all()
         serializer=EmploymentSerializers(employments,many=True)
         return Response({"data":serializer.data},status=status.HTTP_200_OK)
     

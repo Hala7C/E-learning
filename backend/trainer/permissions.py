@@ -230,6 +230,7 @@ class DraftProfilePolicy(AccessPolicy):
         access_policies = Policy.objects.filter(statmant=statment)
         policies=get_access_statments(access_policies)
         statements=policies
+        print("DraftProfilePolicy statements:", statements)
     except Statment.DoesNotExist as e:
         if  settings.IS_DATA_LOADED == False :
             pass
@@ -244,6 +245,7 @@ class DraftProfilePolicy(AccessPolicy):
         return user_exists
     def is_owner(self, request, view, action) -> bool:
         teacherProfile = view.get_object()
+        print("is_owner check: request.user =", request.user, ", teacherProfile.user =", teacherProfile.user)
         return request.user == teacherProfile.user
 
 

@@ -64,7 +64,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'axes.middleware.AxesMiddleware',
-    'mainAuth.middleware.LanguageMiddleware',
+    # 'mainAuth.middleware.LanguageMiddleware',
 ]
 
 ROOT_URLCONF = 'eLearning.urls'
@@ -149,7 +149,6 @@ LOCALE_PATHS = [
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-
 DJOSER={
     'LOGIN_FIELD': 'email',
     'USER_CREATE_PASSWORD_RETYPE':True,
@@ -165,7 +164,7 @@ DJOSER={
     # 'SOCIAL_AUTH_TOKEN_STRATEGY':'djoser.social.token.jwt.TokenStrategy',
     'TOKEN_MODEL':'rest_framework.authtoken.models.Token',
     'SOCIAL_AUTH_TOKEN_STRATEGY':'mainAuth.token.authToken.CustomTokenStrategy',
-    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS':config('SOCIAL_AUTH_ALLOWED_REDIRECT_URIS', cast=Csv()),
+    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS':['http://localhost:8000/callback','http://localhost:3000/google-callback'],
     'EMAIL': {
         'activation': 'mainAuth.email.ActivationEmail',
         # Add other email actions and their corresponding template paths here
@@ -175,7 +174,7 @@ DJOSER={
         'user': 'mainAuth.serializers.UserRegistrationSerializer',
         'current_user':'mainAuth.serializers.UserRegistrationSerializer',
         'user_delete': 'djoser.serializers.UserDeleteSerializers',
-        'social_login': 'mainAuth.serializers.CustomSocialLoginSerializer',
+        # 'social_login': 'mainAuth.serializers.CustomSocialLoginSerializer',
     }
     
 }
@@ -218,6 +217,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
     "http://localhost:3000"
 ]
+CORS_ALLOW_CREDENTIALS = True
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -324,7 +325,6 @@ MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET = True
 
 
 
-
 CLIENT_ID = config("ZOOM_CLIENT_ID")
 CLIENT_SECRET = config("ZOOM_CLIENT_SECRET")
 ACCOUNT_ID = config("ZOOM_ACCOUNT_ID")
@@ -334,6 +334,6 @@ STRIPE_PUBLISHABLE_KEY=config('STRIPE_PUBLISHABLE_KEY')
 STRIPE_SECRET_KEY=config('STRIPE_SECRET_KEY')
 STRIPE_ENDPOINT_SECRET=config('STRIPE_ENDPOINT_SECRET')
 STRIPE_CONNECT_CLIENT_ID=config('STRIPE_CONNECT_CLIENT_ID')
-BASE_URL='http://127.0.0.1:8000/'
+BASE_URL='http://127.0.0.1:3000/'
 
 IS_DATA_LOADED=config('IS_DATA_LOADED')== 'True'
