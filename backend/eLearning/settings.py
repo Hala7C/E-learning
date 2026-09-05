@@ -45,8 +45,8 @@ INSTALLED_APPS = [
     'storages',
     'django_filters',
     'minio_storage', 
-    'payments',
     'rating',
+    'payments',
     'AdminDashBoard',
 
 
