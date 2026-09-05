@@ -5,6 +5,7 @@ from newapp.utils import *
 from django.contrib.contenttypes.models import ContentType
 from eLearning import settings
 from rest_framework.exceptions import NotFound
+from trainer.models import LiveSessionMainDataSection
 class IsTrainerUser(BasePermission):
     def has_permission(self, request, view):
         user=request.user
@@ -22,16 +23,17 @@ class IsTrainerUser(BasePermission):
 
     
 class CoursePolicy(AccessPolicy):
-    try:
-        statment=Statment.objects.filter(view_name='course').get()
+    @property
+    def statements(self):
+        try:
+            statment = Statment.objects.get(view_name='Course')
+        except Statment.DoesNotExist:
+            if settings.IS_DATA_LOADED:
+                raise NotFound("The requested resource was not found.")
+            return []
         access_policies = Policy.objects.filter(statmant=statment)
-        policies=get_access_statments(access_policies)
-        statements=policies
-    except Statment.DoesNotExist as e:
-        if  settings.IS_DATA_LOADED == False :
-            pass
-        else :
-            raise NotFound(f"The requested resource was not found. {e}")
+        print("CoursePolicy statements:", get_access_statments(access_policies))
+        return get_access_statments(access_policies)
     def is_assistant(self, request, view, action) -> bool:
         # check polomorphic
         course = view.get_object()
@@ -53,16 +55,16 @@ class CoursePolicy(AccessPolicy):
 
 
 class CategoryPolicy(AccessPolicy):
-    try:
-        statment=Statment.objects.filter(view_name='Category').get()
+    @property
+    def statements(self):
+        try:
+            statment = Statment.objects.get(view_name='Category')
+        except Statment.DoesNotExist:
+            if settings.IS_DATA_LOADED:
+                raise NotFound("The requested resource was not found.")
+            return []
         access_policies = Policy.objects.filter(statmant=statment)
-        policies=get_access_statments(access_policies)
-        statements=policies
-    except Statment.DoesNotExist as e:
-        if  settings.IS_DATA_LOADED == False :
-            pass
-        else :
-            raise NotFound(f"The requested resource was not found. {e}")
+        return get_access_statments(access_policies)
     def is_assistant(self, request, view, action) -> bool:
         message = view.get_object()
         content_type = ContentType.objects.get_for_model(message)
@@ -72,16 +74,16 @@ class CategoryPolicy(AccessPolicy):
         return user_exists
 
 class VedioSectionPolicy(AccessPolicy):
-    try:
-        statment=Statment.objects.filter(view_name='VedioSection').get()
+    @property
+    def statements(self):
+        try:
+            statment = Statment.objects.get(view_name='VedioSection')
+        except Statment.DoesNotExist:
+            if settings.IS_DATA_LOADED:
+                raise NotFound("The requested resource was not found.")
+            return []
         access_policies = Policy.objects.filter(statmant=statment)
-        policies=get_access_statments(access_policies)
-        statements=policies
-    except Statment.DoesNotExist as e:
-        if  settings.IS_DATA_LOADED == False :
-            pass
-        else :
-            raise NotFound(f"The requested resource was not found. {e}")
+        return get_access_statments(access_policies)
     def is_assistant(self, request, view, action) -> bool:
         message = view.get_object()
         content_type = ContentType.objects.get_for_model(message)
@@ -94,16 +96,16 @@ class VedioSectionPolicy(AccessPolicy):
         return request.user == video.course.trainer
 
 class LiveSessionMainDataPolicy(AccessPolicy):
-    try:
-        statment=Statment.objects.filter(view_name='LiveSessionMainData').get()
+    @property
+    def statements(self):
+        try:
+            statment = Statment.objects.get(view_name='LiveSessionMainData')
+        except Statment.DoesNotExist:
+            if settings.IS_DATA_LOADED:
+                raise NotFound("The requested resource was not found.")
+            return []
         access_policies = Policy.objects.filter(statmant=statment)
-        policies=get_access_statments(access_policies)
-        statements=policies
-    except Statment.DoesNotExist as e:
-        if  settings.IS_DATA_LOADED == False :
-            pass
-        else :
-            raise NotFound(f"The requested resource was not found. {e}")
+        return get_access_statments(access_policies)
     def is_assistant(self, request, view, action) -> bool:
         message = view.get_object()
         content_type = ContentType.objects.get_for_model(message)
@@ -118,16 +120,18 @@ class LiveSessionMainDataPolicy(AccessPolicy):
 
 
 class LiveSessionDetailsPolicy(AccessPolicy):
-    try:
-        statment=Statment.objects.filter(view_name='LiveSessionDetails').get()
+    @property
+    def statements(self):
+        try:
+            statment = Statment.objects.get(view_name='LiveSessionDetails')
+        except Statment.DoesNotExist:
+            if settings.IS_DATA_LOADED:
+                raise NotFound("The requested resource was not found.")
+            return []
         access_policies = Policy.objects.filter(statmant=statment)
         policies=get_access_statments(access_policies)
         statements=policies
-    except Statment.DoesNotExist as e:
-        if  settings.IS_DATA_LOADED == False :
-            pass
-        else :
-            raise NotFound(f"The requested resource was not found. {e}")
+        return statements
     def is_assistant(self, request, view, action) -> bool:
         message = view.get_object()
         content_type = ContentType.objects.get_for_model(message)
@@ -140,16 +144,16 @@ class LiveSessionDetailsPolicy(AccessPolicy):
         return request.user == liveSessionDetails.cycle.course.trainer
 
 class CyclePolicy(AccessPolicy):
-    try:
-        statment=Statment.objects.filter(view_name='Cycle').get()
+    @property
+    def statements(self):
+        try:
+            statment = Statment.objects.get(view_name='Cycle')
+        except Statment.DoesNotExist:
+            if settings.IS_DATA_LOADED:
+                raise NotFound("The requested resource was not found.")
+            return []
         access_policies = Policy.objects.filter(statmant=statment)
-        policies=get_access_statments(access_policies)
-        statements=policies
-    except Statment.DoesNotExist as e:
-        if  settings.IS_DATA_LOADED == False :
-            pass
-        else :
-            raise NotFound(f"The requested resource was not found. {e}")
+        return get_access_statments(access_policies)
     def is_assistant(self, request, view, action) -> bool:
         message = view.get_object()
         content_type = ContentType.objects.get_for_model(message)
@@ -214,7 +218,7 @@ class CycleAccessPolicy(AccessPolicy):
         course = view.get_object()
         return request.user == course.trainer
     def is_live_sessions_created(self, request, view, action) -> bool:
-        cycle = cls.my_variable
+        cycle = self.my_variable
         if cycle:
             res=LiveSessionMainDataSection.objects.filter(course=cycle.course).count()
             if cycle.livesessiondetails.count() <= res: 
@@ -225,16 +229,17 @@ class CycleAccessPolicy(AccessPolicy):
 
 
 class DraftProfilePolicy(AccessPolicy):
-    try:
-        statment=Statment.objects.filter(view_name='DraftProfile').get()
+    @property
+    def statements(self):
+        try:
+            statment = Statment.objects.get(view_name='DraftProfile')
+        except Statment.DoesNotExist:
+            if settings.IS_DATA_LOADED:
+                raise NotFound("The requested resource was not found.")
+            return []
         access_policies = Policy.objects.filter(statmant=statment)
-        policies=get_access_statments(access_policies)
-        statements=policies
-    except Statment.DoesNotExist as e:
-        if  settings.IS_DATA_LOADED == False :
-            pass
-        else :
-            raise NotFound(f"The requested resource was not found. {e}")
+        return get_access_statments(access_policies)
+
     def is_assistant(self, request, view, action) -> bool:
         message = view.get_object()
         content_type = ContentType.objects.get_for_model(message)
@@ -244,22 +249,21 @@ class DraftProfilePolicy(AccessPolicy):
         return user_exists
     def is_owner(self, request, view, action) -> bool:
         teacherProfile = view.get_object()
-        print("is_owner check: request.user =", request.user, ", teacherProfile.user =", teacherProfile.user)
         return request.user == teacherProfile.user
 
 
 
 class PendingProfilePolicy(AccessPolicy):
-    try:
-        statment=Statment.objects.filter(view_name='PendingProfile').get()
+    @property
+    def statements(self):
+        try:
+            statment = Statment.objects.get(view_name='PendingProfile')
+        except Statment.DoesNotExist:
+            if settings.IS_DATA_LOADED:
+                raise NotFound("The requested resource was not found.")
+            return []
         access_policies = Policy.objects.filter(statmant=statment)
-        policies=get_access_statments(access_policies)
-        statements=policies
-    except Statment.DoesNotExist as e:
-        if  settings.IS_DATA_LOADED == False :
-            pass
-        else :
-            raise NotFound(f"The requested resource was not found. {e}")
+        return get_access_statments(access_policies)
     def is_assistant(self, request, view, action) -> bool:
         message = view.get_object()
         content_type = ContentType.objects.get_for_model(message)
@@ -272,16 +276,16 @@ class PendingProfilePolicy(AccessPolicy):
 
 
 class SubmitProfilePolicy(AccessPolicy):
-    try:
-        statment=Statment.objects.filter(view_name='SubmitProfile').get()
+    @property
+    def statements(self):
+        try:
+            statment = Statment.objects.get(view_name='SubmitProfile')
+        except Statment.DoesNotExist:
+            if settings.IS_DATA_LOADED:
+                raise NotFound("The requested resource was not found.")
+            return []
         access_policies = Policy.objects.filter(statmant=statment)
-        policies=get_access_statments(access_policies)
-        statements=policies
-    except Statment.DoesNotExist as e:
-        if  settings.IS_DATA_LOADED == False :
-            pass
-        else :
-            raise NotFound(f"The requested resource was not found. {e}")
+        return get_access_statments(access_policies)
     def is_assistant(self, request, view, action) -> bool:
         message = view.get_object()
         content_type = ContentType.objects.get_for_model(message)

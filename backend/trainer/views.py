@@ -63,7 +63,7 @@ from rating.models import Rating
 from django.contrib.contenttypes.models import ContentType
 from django.db import connection
 from django.shortcuts import get_object_or_404
-
+from django.http import Http404
 import stripe
 from eLearning import settings
 from mainAuth.models import StudentProfile
@@ -150,7 +150,7 @@ class DraftTrainerProfile(ModelViewSet):
                                     # QueryDict.copy() and dict.copy() both work
         data['status'] = 'draft'
         data['user'] = user.id
-        data['name'] = user.get_full_name
+        # data['name'] = user.get_full_name
         profile_exists = TeacherProfile.objects.filter(user=user).exists()
         if profile_exists:
             return Response({"error": "A profile for this user is alreay exist"}, status=status.HTTP_400_BAD_REQUEST)
@@ -235,7 +235,7 @@ class CourseViewSet(ModelViewSet):
             queryset = queryset.order_by('-created_on')
         
         is_student=self.request.query_params.get('is_student')
-        if is_student :
+        if is_student and is_student.lower() == 'true':
             queryset=queryset.filter(status='published',is_blocked=False)
             
         return queryset
@@ -244,7 +244,7 @@ class CourseViewSet(ModelViewSet):
         queryset = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(queryset)
         serializer = self.serializer_class(page,many=True)
-        total_courses = self.get_queryset().count()
+        total_courses = queryset.count()
         response_data = {
             'total_count': total_courses,
             'results': serializer.data
@@ -252,59 +252,57 @@ class CourseViewSet(ModelViewSet):
         return self.get_paginated_response(response_data)
     
     
-    @action( methods=['list'],detail=True)
+    @action( methods=['get'],detail=False)
     def getTrainerCourse(self,request):
-        user=request.user
-        get_queryset=self.get_queryset()
-        courses=get_queryset.filter(trainer=user)
-        serializer = CourseSerializer(courses,many=True)
-        return Response({"data":serializer.data},status=status.HTTP_200_OK)
+        queryset = self.filter_queryset(self.get_queryset()).filter(trainer=request.user)
+        page = self.paginate_queryset(queryset)
+        serializer = self.serializer_class(page if page is not None else queryset, many=True)
+        response_data = {'total_count': queryset.count(), 'results': serializer.data}
+        return Response({"data": response_data}, status=status.HTTP_200_OK)
 
     
     # TODO /clean code 
     @transaction.atomic
     def create(self, request, *args, **kwargs):
-        try:
-            videos_data = request.data.pop('videos', [])
-            lives_data = request.data.pop('lives_data', [])
-            request.data['trainer']=request.user.id 
-            # Create the course
-            
-            serializer = AddCourseSerializer(data=request.data)
-            serializer.is_valid(raise_exception=True)
-            course=serializer.save()
+        data = request.data.copy()          
+        videos_data = data.pop('videos', [])
+        lives_data = data.pop('lives_data', [])
+        data['trainer'] = request.user.id
 
-            # Create the associated videos
-            for video_data in videos_data:
-                video_data['course'] = course.id
-                video_serializer = VedioSectionSerializer(data=video_data)
-                video_serializer.is_valid(raise_exception=True)
-                video_serializer.save()                
-            for live_data in lives_data:
-                live_data['course'] = course.id
-                live_data_serializer = LiveSessionMainDataSectionSerializer(data=live_data)
-                live_data_serializer.is_valid(raise_exception=True)
-                live_data_serializer.save()
-            ser=CourseSerializer(instance=course)
-            headers = self.get_success_headers(ser.data)
-            return Response(ser.data, status=status.HTTP_201_CREATED, headers=headers)
-        except Exception as e:
-            transaction.set_rollback(True)
-            return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
-        
+        serializer = AddCourseSerializer(data=data)
+        serializer.is_valid(raise_exception=True)   
+        course = serializer.save()                  
+
+        for video_data in videos_data:
+            video_data = dict(video_data)
+            video_data['course'] = course.id
+            s = VedioSectionSerializer(data=video_data)
+            s.is_valid(raise_exception=True)
+            s.save()
+        for live_data in lives_data:
+            live_data = dict(live_data)
+            live_data['course'] = course.id
+            s = LiveSessionMainDataSectionSerializer(data=live_data)
+            s.is_valid(raise_exception=True)
+            s.save()
+
+        ser = CourseSerializer(instance=course)
+        headers = self.get_success_headers(ser.data)
+        return Response(ser.data, status=status.HTTP_201_CREATED, headers=headers)
+
     def update(self, request,pk, format=None):
-            # request.data._mutable = True
-            request.data['trainer']=request.user.id
             try:
                 instance = self.get_object()
-            except Course.DoesNotExist:
-                return Response({"error": "Object not found."}, status=status.HTTP_404_NOT_FOUND)
-            ser = AddCourseSerializer(instance, data=request.data,partial=True)
+            except Http404:                      
+                return Response({"error": "Object not found."},   
+                                status=status.HTTP_404_NOT_FOUND)  
+            data = request.data.copy()
+            data.pop('trainer', None)
+            ser = AddCourseSerializer(instance, data=data, partial=True)
             if ser.is_valid():
                 ser.save()
-                return Response(ser.data,status=status.HTTP_200_OK)
-            return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
-    
+                return Response(ser.data, status=status.HTTP_200_OK)
+            return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def partial_update(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -330,22 +328,23 @@ class CourseViewSet(ModelViewSet):
     def destroy(self, request,pk):
         try:
             instance = Course.objects.get(pk=pk)
-            if instance.trainer==request.user:
-                    instance.delete()
-                    return Response(status=status.HTTP_204_NO_CONTENT)
-            return Response({"massege": "You are not the owner"},status=status.HTTP_403_FORBIDDEN)
         except Course.DoesNotExist:
             return Response({"error": "Object not found."}, status=status.HTTP_404_NOT_FOUND)
-        
+        if instance.trainer != request.user:
+            return Response({"error": "You are not the owner"},  # fixed "massege" typo
+                            status=status.HTTP_403_FORBIDDEN)
+        instance.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    
     @action(methods=['post'],detail=False)
-    def give_obj_perm(self,request,pk):
-            instance = Course.objects.get(pk=pk)
-            user=CustomUser.objects.get(pk=request.data['user_id'])
-            p=ObjectPerm(content_object=instance)
-            p.save()
-            p.users.add(user)
-            p.save()
-            return Response({"message":"permission granted successfully"},status=status.HTTP_200_OK)
+    def give_obj_perm(self, request, pk):    
+        instance = get_object_or_404(Course, pk=pk)          
+        user = get_object_or_404(CustomUser, pk=request.data.get('user_id'))  
+        perm = ObjectPerm.objects.create(content_object=instance)              
+        perm.users.add(user)                                                   
+        return Response({"message": "permission granted successfully"},        
+                        status=status.HTTP_200_OK)
 
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
@@ -653,6 +652,9 @@ class LiveSessionMainDataSectionViewSet(ModelViewSet):
     permission_classes=[LiveSessionMainDataPolicy]
     def get_queryset(self):
         queryset = super().get_queryset()
+        course_id = self.request.query_params.get('course')
+        if course_id:
+            queryset = queryset.filter(course=course_id)
         return queryset
 
     def create(self, request, *args, **kwargs):
@@ -692,19 +694,17 @@ class CycleViewSet(ModelViewSet):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        course_id = self.request.query_params.get('course')
+        if course_id:
+            queryset = queryset.filter(course=course_id)
         return queryset
 
-
-    def list(self,request):
-        cycles=Cycle.objects.all()
-        serializer = self.serializer_class(cycles,many=True)
-        total_cycles = self.get_queryset().count()
-        response_data = {
-            'total_count': total_cycles,
-            'results': serializer.data
-        }
-        return Response({"data":response_data},status=status.HTTP_200_OK)
-    
+    def list(self, request):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.serializer_class(queryset, many=True)
+        response_data = {'total_count': queryset.count(), 'results': serializer.data}
+        return Response({"data": response_data}, status=status.HTTP_200_OK)
+        
     @transaction.atomic
     def create(self, request, *args, **kwargs):
         try:
@@ -742,7 +742,7 @@ class CycleViewSet(ModelViewSet):
                 if strategy_type == 'zoom':
                     strategy = ZoomMeeting()
                 else:
-                    return Response({'error': 'Invalid strategy'}, status=400)
+                    raise ValueError('Invalid strategy')
                 lsDetails_id=ldata.id
                 service = MeetingServices(strategy)
 

@@ -7,41 +7,42 @@ from rest_framework.exceptions import NotFound
 from eLearning import settings
 from django.shortcuts import get_list_or_404, get_object_or_404
 class NotificationPolicy(AccessPolicy):
-    try:
-        statment=Statment.objects.filter(view_name='notification').get()
+    @property
+    def statements(self):
+        try:
+            statment = Statment.objects.get(view_name='notification')
+        except Statment.DoesNotExist:
+            if settings.IS_DATA_LOADED:
+                raise NotFound("The requested resource was not found.")
+            return []
         access_policies = Policy.objects.filter(statmant=statment)
-        policies=get_access_statments(access_policies)
-        statements=policies
-    except Statment.DoesNotExist as e:
-        if  settings.IS_DATA_LOADED == False :
-            pass
-        else :
-            raise NotFound(f"The requested resource was not found. {e}")
+        return get_access_statments(access_policies)
+
     def is_assistant(self, request, view, action) -> bool:
         message = view.get_object()
         content_type = ContentType.objects.get_for_model(message)
         object_perm = ObjectPerm.objects.filter(content_type=content_type, object_id=message.id).first()
-        user=request.user
-        user_exists = ObjectPerm.objects.filter(users=user).exists()
-        return user_exists
+        return ObjectPerm.objects.filter(users=request.user).exists()
+
     def is_owner(self, request, view, action) -> bool:
         message = view.get_object()
-        user_group=f'user_{request.user.id}'
-        group_name=message.group_name
-        return group_name == user_group
+        user_group = f'user_{request.user.id}'
+        return message.group_name == user_group
 
 
 class PermissionPolicy(AccessPolicy):
-    try:
-        statment=Statment.objects.filter(view_name='Policy').get()
+    
+    
+    @property
+    def statements(self):
+        try:
+            statment = Statment.objects.get(view_name='permission')
+        except Statment.DoesNotExist:
+            if settings.IS_DATA_LOADED:
+                raise NotFound("The requested resource was not found.")
+            return []
         access_policies = Policy.objects.filter(statmant=statment)
-        policies=get_access_statments(access_policies)
-        statements=policies
-    except Statment.DoesNotExist as e:
-        if  settings.IS_DATA_LOADED == False :
-            pass
-        else :
-            raise NotFound(f"The requested resource was not found. {e}")
+        return get_access_statments(access_policies)
     def is_assistant(self, request, view, action) -> bool:
         message = view.get_object()
         content_type = ContentType.objects.get_for_model(message)

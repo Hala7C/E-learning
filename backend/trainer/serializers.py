@@ -56,8 +56,12 @@ class AddTrainerProfileSerializers(serializers.HyperlinkedModelSerializer):
             user.save()
 
     def create(self, validated_data):
-        user = validated_data.get("user") or self.context["request"].user
-        self._sync_user_name(user, validated_data)
+        first_name = validated_data.pop("first_name", None)
+        last_name = validated_data.pop("last_name", None)
+        user = validated_data.get("user")
+        if first_name is not None: user.first_name = first_name
+        if last_name is not None: user.last_name = last_name
+        user.save()
         return TeacherProfile.objects.create(**validated_data)
 
     def update(self, instance, validated_data):

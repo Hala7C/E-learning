@@ -27,7 +27,6 @@ class Rating(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    course_rating = GenericRelation('trainer.Course', related_query_name='ratings')
 
 
     def __str__(self):

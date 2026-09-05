@@ -14,16 +14,16 @@ class IsTrainerUser(BasePermission):
         return False
 
 class CourseSubscrubtionPolicy(AccessPolicy):
-    try:
-        statment=Statment.objects.filter(view_name='CourseSubscrubtion').get()
+    @property
+    def statements(self):
+        try:
+            statment = Statment.objects.get(view_name='CourseSubscrubtion')
+        except Statment.DoesNotExist:
+            if settings.IS_DATA_LOADED:
+                raise NotFound("The requested resource was not found.")
+            return []
         access_policies = Policy.objects.filter(statmant=statment)
-        policies=get_access_statments(access_policies)
-        statements=policies
-    except Statment.DoesNotExist as e:
-        if  settings.IS_DATA_LOADED == False :
-            pass
-        else :
-            raise NotFound(f"The requested resource was not found. {e}")
+        return get_access_statments(access_policies)
     def is_assistant(self, request, view, action) -> bool:
         message = view.get_object()
         content_type = ContentType.objects.get_for_model(message)
@@ -39,16 +39,16 @@ class CourseSubscrubtionPolicy(AccessPolicy):
 
 
 class TransactionPolicy(AccessPolicy):
-    try:
-        statment=Statment.objects.filter(view_name='Transaction').get()
+    @property
+    def statements(self):
+        try:
+            statment = Statment.objects.get(view_name='Transaction')
+        except Statment.DoesNotExist:
+            if settings.IS_DATA_LOADED:
+                raise NotFound("The requested resource was not found.")
+            return []
         access_policies = Policy.objects.filter(statmant=statment)
-        policies=get_access_statments(access_policies)
-        statements=policies
-    except Statment.DoesNotExist as e:
-        if  settings.IS_DATA_LOADED == False :
-            pass
-        else :
-            raise NotFound(f"The requested resource was not found. {e}")
+        return get_access_statments(access_policies)
     def is_assistant(self, request, view, action) -> bool:
         message = view.get_object()
         content_type = ContentType.objects.get_for_model(message)
@@ -62,16 +62,16 @@ class TransactionPolicy(AccessPolicy):
 
 
 class AccountDetailPolicy(AccessPolicy):
-    try:
-        statment=Statment.objects.filter(view_name='AccountDetail').get()
+    @property
+    def statements(self):
+        try:
+            statment = Statment.objects.get(view_name='AccountDetail')
+        except Statment.DoesNotExist:
+            if settings.IS_DATA_LOADED:
+                raise NotFound("The requested resource was not found.")
+            return []
         access_policies = Policy.objects.filter(statmant=statment)
-        policies=get_access_statments(access_policies)
-        statements=policies
-    except Statment.DoesNotExist as e:
-        if  settings.IS_DATA_LOADED == False :
-            pass
-        else :
-            raise NotFound(f"The requested resource was not found. {e}")
+        return get_access_statments(access_policies)
     def is_assistant(self, request, view, action) -> bool:
         message = view.get_object()
         content_type = ContentType.objects.get_for_model(message)
@@ -87,16 +87,16 @@ class AccountDetailPolicy(AccessPolicy):
 
 
 class EnrollmentPolicy(AccessPolicy):
-    try:
-        statment=Statment.objects.filter(view_name='Enrollment').get()
+    @property
+    def statements(self):
+        try:
+            statment = Statment.objects.get(view_name='Enrollment')
+        except Statment.DoesNotExist:
+            if settings.IS_DATA_LOADED:
+                raise NotFound("The requested resource was not found.")
+            return []
         access_policies = Policy.objects.filter(statmant=statment)
-        policies=get_access_statments(access_policies)
-        statements=policies
-    except Statment.DoesNotExist as e:
-        if  settings.IS_DATA_LOADED == False :
-            pass
-        else :
-            raise NotFound(f"The requested resource was not found. {e}")
+        return get_access_statments(access_policies)
     def is_assistant(self, request, view, action) -> bool:
         message = view.get_object()
         content_type = ContentType.objects.get_for_model(message)
@@ -107,29 +107,29 @@ class EnrollmentPolicy(AccessPolicy):
 
 
 class StripeAuthorizePolicy(AccessPolicy):
-    try:
-        statment=Statment.objects.filter(view_name='StripeAuthorize').get()
+    @property
+    def statements(self):
+        try:
+            statment = Statment.objects.get(view_name='StripeAuthorize')
+        except Statment.DoesNotExist:
+            if settings.IS_DATA_LOADED:
+                raise NotFound("The requested resource was not found.")
+            return []
         access_policies = Policy.objects.filter(statmant=statment)
-        policies=get_access_statments(access_policies)
-        statements=policies
-    except Statment.DoesNotExist as e:
-        if  settings.IS_DATA_LOADED == False :
-            pass
-        else :
-            raise NotFound(f"The requested resource was not found. {e}")
+        return get_access_statments(access_policies)
 
 
 class PayoutPolicy(AccessPolicy):
-    try:
-        statment=Statment.objects.filter(view_name='Payout').get()
+    @property
+    def statements(self):
+        try:
+            statment = Statment.objects.get(view_name='Payout')
+        except Statment.DoesNotExist:
+            if settings.IS_DATA_LOADED:
+                raise NotFound("The requested resource was not found.")
+            return []
         access_policies = Policy.objects.filter(statmant=statment)
-        policies=get_access_statments(access_policies)
-        statements=policies
-    except Statment.DoesNotExist as e:
-        if  settings.IS_DATA_LOADED == False :
-            pass
-        else :
-            raise NotFound(f"The requested resource was not found. {e}")
+        return get_access_statments(access_policies)
     def is_connect_account_exist(self, request, view, action) -> bool:
         user=request.user
         Account_detail=AcconutDetail.objects.get(trainer=user)

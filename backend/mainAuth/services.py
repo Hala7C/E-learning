@@ -57,14 +57,16 @@ def getLoginUserService(request):
         return user
     except:
         return None
+
 import time    
 def getOTPValidityService(user, otp):
     """
     Verify the OTP
     """
+    if not user.otp_base32:
+        return False
+
     totp = pyotp.TOTP(user.otp_base32)
-    print(totp.now())
-    print(otp)
     if not totp.verify(otp):
         return False
     user.logged_in = True

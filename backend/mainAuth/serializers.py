@@ -54,7 +54,9 @@ class UserRegistrationSerializer(BaseUserRegistrationSerializer):
           content_type = ContentType.objects.get_for_model(User)
           average_rate = Rating.objects.filter(content_type=content_type, object_id=instance.id).aggregate(Avg('rate_value'))['rate_value__avg']
           representation['average_rate']=average_rate
-          return representation    
+          return representation  
+        else:  
+            return representation
         
 
     

@@ -43,7 +43,13 @@ class Policy(models.Model):
 
     class Meta:
         verbose_name_plural = "Policies"
-
+    def save(self, *args, **kwargs):
+            self.action = self.action.strip()
+            self.principal = self.principal.strip()
+            self.effect = self.effect.strip()
+            if self.conditions:
+                self.conditions = self.conditions.strip()
+            super().save(*args, **kwargs)
     def __str__(self):
         return self.action
     

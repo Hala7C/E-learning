@@ -14,7 +14,7 @@ class CourseFilter(django_filters.FilterSet):
         }
 
     def filter_title(self, queryset, name, value):
-        return queryset.filter(translations__title__icontains=value)
+        return queryset.filter(translations__title__icontains=value).distinct()
 
     def filter_content(self, queryset, name, value):
-        return queryset.filter(translations__content__icontains=value)
+        return queryset.filter(translations__content__icontains=value).distinct()
