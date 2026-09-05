@@ -12,7 +12,8 @@ import GoogleCallback from "./pages/GoogleCallback";
 import Dashboard from "./pages/Dashboard";
 import TrainerProfile from "./pages/TrainerProfile";
 import "./styles/index.css";
-
+import TrainerCourses from "./pages/TrainerCourses";
+import CourseCycles from "./pages/CourseCycles";
 export default function App() {
   return (
     <AuthProvider>
@@ -41,6 +42,22 @@ export default function App() {
             element={
               <PrivateRoute>
                 <TrainerProfile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/trainer/courses"
+            element={
+              <PrivateRoute>
+                <TrainerCourses />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/trainer/courses/:courseId/cycles"
+            element={
+              <PrivateRoute>
+                <CourseCycles />
               </PrivateRoute>
             }
           />

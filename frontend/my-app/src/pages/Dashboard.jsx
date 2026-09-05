@@ -15,7 +15,10 @@ export default function Dashboard() {
       <nav className="dashboard-nav">
         <Link to="/trainer/profile">Trainer Profile</Link>
       </nav>
-
+        <nav className="dashboard-nav">
+        <Link to="/trainer/profile">Trainer Profile</Link>
+        <Link to="/trainer/courses">My courses</Link>
+      </nav>
       {user && (
         <div className="settings-card">
           <h2>Your account</h2>
